@@ -1,6 +1,5 @@
 Feature: Address
 
-  @single
   Scenario Outline: Successful setup new address
     Given I open chrome browser
     When I navigate to login.html page

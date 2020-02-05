@@ -1,6 +1,5 @@
 Feature: Buy
 
-  @single
   Scenario : Successful buy product
     Given I open chrome browser
     When I navigate to login.html page
