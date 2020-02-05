@@ -4,10 +4,10 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        features = "src/Cucumber/Features/address.feature", "src/Cucumber/Features/buy.feature",
+        features = "src/Cucumber/Features/address.feature",
         glue = "StepDefinitions",
         plugin = {"pretty","html:out"})
 
-public class Launcher {
+public class AddressTest {
 
 }
