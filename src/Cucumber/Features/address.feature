@@ -9,6 +9,7 @@ Feature: Address
     And I click on addreess button
     And I provide <alias> and <address> and <city> and <zip> and <country> and <phone>
     Then I click on save addreess button
+    And close browser
 
     Examples:
 

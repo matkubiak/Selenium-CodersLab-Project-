@@ -20,4 +20,5 @@ Feature: Buy
     And I agree on term
     And I click on order button
     Then Take screenshot
+    And close browser
 

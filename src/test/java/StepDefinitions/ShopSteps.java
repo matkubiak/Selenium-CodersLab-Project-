@@ -1,6 +1,7 @@
 package StepDefinitions;
 
 
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
@@ -115,6 +116,8 @@ public class ShopSteps {
             assertThat(webElementAddress.getText()).contains(city);
             assertThat(webElementAddress.getText()).contains(zip);
             assertThat(webElementAddress.getText()).contains(country);
+        } finally {
+            webDriver.quit();
         }
     }
 
@@ -136,7 +139,9 @@ public class ShopSteps {
         WebElement webElement = webDriver.findElement(By.name("confirmDeliveryOption"));
         webElement.click();
 
-     webDriver.quit();
-
     }
+
+    @And("^close browser$")
+    public void closeBrowser() { driver.quit(); }
+
 }

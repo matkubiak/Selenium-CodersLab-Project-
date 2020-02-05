@@ -51,46 +51,49 @@ public class AddressSteps {
         WebElement webElement = webDriver.findElement(By.xpath("//span[text()='Mateusz Kubiak']"));
 
 
-    @And("^I click on addreess button$")
-    public void iClickOnAddreessButton() {
-         WebElement webElement = webDriver.findElement(By.id("address-link"));
-         webElement.click();
+        @And("^I click on addreess button$")
+        public void iClickOnAddreessButton () {
+            WebElement webElement = webDriver.findElement(By.id("address-link"));
+            webElement.click();
+        }
+
+
+        @And("^I provide <alias> <address> <city> <zip> <country> and <phone>$")
+        public void iProvideAliasAddressCityZipCountryAndPhone () {
+
+            WebElement alias = driver.findElement(By.name("alias"));
+            alias.sendKeys(alias);
+
+            WebElement address = driver.findElement(By.name("address1"));
+            address.sendKeys(address);
+
+            WebElement city = driver.findElement(By.name("city"));
+            city.sendKeys(city);
+
+            WebElement zip = webDriver.findElement(By.name("postcode"));
+            zip.sendKeys(zip);
+
+            WebElement country = driver.findElement(By.name("id_country"));
+            country.sendKeys(country);
+
+            WebElement phone = driver.findElement(By.name("phone"));
+            phone.sendKeys(phone);
+
+        }
+
+        @Then("^I click on save addreess button$")
+        public void iClickOnSaveAddreessButton () {
+
+            WebElement webElement = webDriver.findElement(By.xpath("//button[contains(text(),'Save')]"));
+            webElement.click();
+        }
+
+        @And("^close browser$")
+        public void closeBrowser () {
+            driver.quit();
+        }
+
     }
-
-
-
-
-    @And("^I provide <alias> <address> <city> <zip> <country> and <phone>$")
-    public void iProvideAliasAddressCityZipCountryAndPhone() {
-
-        WebElement alias = driver.findElement(By.name("alias"));
-        alias.sendKeys(alias);
-
-        WebElement address = driver.findElement(By.name("address1"));
-        address.sendKeys(address);
-
-        WebElement city = driver.findElement(By.name("city"));
-        city.sendKeys(city);
-
-        WebElement zip = webDriver.findElement(By.name("postcode"));
-        zip.sendKeys(zip);
-
-        WebElement country = driver.findElement(By.name("id_country"));
-        country.sendKeys(country);
-
-        WebElement phone = driver.findElement(By.name("phone"));
-        phone.sendKeys(phone);
-
-    }
-
-    @Then("^I click on save addreess button$")
-    public void iClickOnSaveAddreessButton() {
-
-        WebElement webElement = webDriver.findElement(By.xpath("//button[contains(text(),'Save')]"));
-        webElement.click();
-    }
-}
-
 
 
 
