@@ -1,16 +1,18 @@
 Feature: Address
 
   Scenario Outline: Successful setup new address
-    Given I open chrome browser
-    When I navigate to login.html page
-    And I provide username and password
-    And I click on login button
+    Given I open new chrome browser
+    When I navigate to login page
+    And I provide username and password on login page
+    And I click login button
     And I click on addreess button
-    And I provide <alias> and <address> and <city> and <zip> and <country> and <phone>
-    Then I click on save addreess button
-    And close browser
+    And I add a new address
+    And I provide a keyword "<alias>" , "<address>" , "<city>" , "<zip>" , "<country>" , "<phone>"
+    Then I click on save address button
+    And Delete address
+    And Close browser
 
     Examples:
 
       | alias | address | city | zip | country | phone |
-      | XXX | Prosta 37 | Poznan | 60-814 | Polska | 781781781 |
+      | XXX | Prosta 37 | Poznan | 60-814 | United Kingdom | 781781781 |

@@ -1,5 +1,6 @@
 package StepDefinitions;
 
+import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -8,6 +9,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
 import java.util.concurrent.TimeUnit;
 
 
@@ -15,85 +18,106 @@ import java.util.concurrent.TimeUnit;
 
 public class AddressSteps {
 
-    public static WebDriver webDriver;
     private WebDriver driver;
 
-    @Given("^I open chrome browser$")
+    @Given("^I open new chrome browser$")
     public void iOpenChromeBrowser() throws Throwable {
         System.setProperty("webdriver.chrome.driver", "src/main/resources/drivers/chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.manage().window().maximize();
+        Thread.sleep(1000);
 
     }
 
-    @When("^I navigate to login\\.html page$")
+    @When("^I navigate to login page$")
     public void iNavigateToLoginHtmlPage() throws Throwable {
         driver.get("https://prod-kurs.coderslab.pl/index.php?controller=authentication");
+        Thread.sleep(1000);
     }
 
-    @When("^I provide username and password$")
+    @And("^I provide username and password on login page$")
     public void iProvideUsernameAsHiAndPasswordAsHi() throws Throwable {
-        WebElement webElement = webDriver.findElement(By.name("email"));
+        WebElement webElement = driver.findElement(By.name("email"));
         webElement.sendKeys("d1616474@urhen.com");
-        webElement = webDriver.findElement(By.name("password"));
+        webElement = driver.findElement(By.name("password"));
         webElement.sendKeys("Szkolenie123");
+        Thread.sleep(500);
     }
 
-    @When("^I click on login button$")
+    @And("^I click login button$")
     public void iClickOnLoginButton() throws Throwable {
-        WebElement webElement = webDriver.findElement(By.id("submit-login"));
+        WebElement webElement = driver.findElement(By.id("submit-login"));
         webElement.click();
+        Thread.sleep(500);
     }
 
-    @Then("^User name should be visible$")
-    public void nameShouldBeVisible() throws Throwable {
-        WebElement webElement = webDriver.findElement(By.xpath("//span[text()='Mateusz Kubiak']"));
+    @And("^I click on addreess button$")
+    public void iClickOnAddreessButton() throws Throwable {
+        driver.findElement(By.cssSelector("a[href*='addresses']")).click();
+        Thread.sleep(500);
+    }
+
+    @And("^I add a new address$")
+    public void iAddANewAddress() throws Throwable {
+        driver.findElement(By.xpath("//*[contains(text(), 'Create new address')]")).click();
+        Thread.sleep(1000);
+    }
+
+    @And("^I provide a keyword \"([^\"]*)\" , \"([^\"]*)\" , \"([^\"]*)\" , \"([^\"]*)\" , \"([^\"]*)\" , \"([^\"]*)\"$")
+    public void iProvideAKeyword(String alias, String address, String city, String zip, String country, String phone) throws Throwable {
+
+        WebElement aliasElement = driver.findElement(By.name("alias"));
+        aliasElement.sendKeys(alias);
+        Thread.sleep(500);
 
 
-        @And("^I click on addreess button$")
-        public void iClickOnAddreessButton () {
-            WebElement webElement = webDriver.findElement(By.id("address-link"));
-            webElement.click();
-        }
+        WebElement addressElement = driver.findElement(By.name("address1"));
+        addressElement.sendKeys(address);
+        Thread.sleep(500);
 
 
-        @And("^I provide <alias> <address> <city> <zip> <country> and <phone>$")
-        public void iProvideAliasAddressCityZipCountryAndPhone () {
+        WebElement cityElement = driver.findElement(By.name("city"));
+        cityElement.sendKeys(city);
+        Thread.sleep(500);
 
-            WebElement alias = driver.findElement(By.name("alias"));
-            alias.sendKeys(alias);
+        WebElement zipElement = driver.findElement(By.name("postcode"));
+        zipElement.sendKeys(zip);
+        Thread.sleep(500);
 
-            WebElement address = driver.findElement(By.name("address1"));
-            address.sendKeys(address);
+        new Select(driver.findElement(By.name("id_country"))).selectByVisibleText(country);
 
-            WebElement city = driver.findElement(By.name("city"));
-            city.sendKeys(city);
+        WebElement phoneElement = driver.findElement(By.name("phone"));
+        phoneElement.sendKeys(phone);
+        Thread.sleep(500);
+    }
 
-            WebElement zip = webDriver.findElement(By.name("postcode"));
-            zip.sendKeys(zip);
 
-            WebElement country = driver.findElement(By.name("id_country"));
-            country.sendKeys(country);
+    @Then("^I click on save address button$")
+    public void iClickOnSaveAddreessButton() throws InterruptedException {
 
-            WebElement phone = driver.findElement(By.name("phone"));
-            phone.sendKeys(phone);
+        WebElement webElement = driver.findElement(By.xpath("//button[contains(text(),'Save')]"));
+        webElement.click();
+        Thread.sleep(500);
+    }
 
-        }
+    @And("^Delete address$")
+    public void deleteAddress() {
+        WebElement adresId = driver.findElement(By.xpath("//*[@id='content']/descendant::h4[position()=2]/following::span[position()=2]"));
+        adresId.click();
+    }
 
-        @Then("^I click on save addreess button$")
-        public void iClickOnSaveAddreessButton () {
 
-            WebElement webElement = webDriver.findElement(By.xpath("//button[contains(text(),'Save')]"));
-            webElement.click();
-        }
-
-        @And("^close browser$")
+     @And("^Close browser$")
         public void closeBrowser () {
             driver.quit();
         }
 
-    }
+
+
+}
+
+
 
 
 
